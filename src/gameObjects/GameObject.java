@@ -7,6 +7,7 @@ import java.awt.Graphics;
  * @author Maciej Żak
  */
 public abstract class GameObject {
+
     private byte x;
     private byte y;
     private byte graphicIndex;
@@ -15,19 +16,13 @@ public abstract class GameObject {
     private int graphicY;
     private double graphicScale;
     private double graphicRotation;
-    
-    public static final byte NORTH=0;
-    public static final byte NORTHEAST=1;
-    public static final byte EAST=2;
-    public static final byte SOUTHEAST=3;
-    public static final byte SOUTH=4;
-    public static final byte SOUTHWEST=5;
-    public static final byte WEST=6;
-    public static final byte NORTHWEST=7;
-    
+
     public abstract void paint(Graphics graphic);
+
     public abstract void nextFrame();
-    public abstract void moveToPoint(byte newX,byte newY);
+
+    public abstract void moveToPoint(byte newX, byte newY);
+
     public abstract void moveInDirection(byte direction);
 
     public byte getX() {
@@ -93,6 +88,5 @@ public abstract class GameObject {
     public void setGraphicRotation(double graphicRotation) {
         this.graphicRotation = graphicRotation;
     }
-    
-    
+
 }
