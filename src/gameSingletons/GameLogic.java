@@ -1,5 +1,8 @@
 package gameSingletons;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Maciej Żak
@@ -7,7 +10,12 @@ package gameSingletons;
 public class GameLogic {
 
     private static GameLogic instance;
-
+    private java.util.List<gameGUI.GameConsole> listGameConsoles;
+    
+    //Dirtection array for moving objects
+    public static final int[] xDirection={0,1,1,1,0,-1,-1,-1};
+    public static final int[] yDirection={-1,-1,0,1,1,1,0,-1};
+    //Indexes for direction array:
     public static final byte NORTH = 0;
     public static final byte NORTHEAST = 1;
     public static final byte EAST = 2;
@@ -18,6 +26,7 @@ public class GameLogic {
     public static final byte NORTHWEST = 7;
 
     public GameLogic() {
+        this.listGameConsoles=new ArrayList<>();
     }
 
     public static GameLogic getInstance() {
@@ -25,6 +34,31 @@ public class GameLogic {
             instance = new GameLogic();
         }
         return instance;
+    }
+    
+    public void addGameConsole(gameGUI.GameConsole gameConsole){
+        if(!this.containsGameConsole(gameConsole)){
+            this.listGameConsoles.add(gameConsole);
+        }else{
+            JOptionPane.showMessageDialog(null, this.listGameConsoles.toString()
+                    +"już zawiera "+gameConsole.toString(), "Błąd w "+this.toString(),
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
+    
+    public void removeGameConsole(gameGUI.GameConsole gameConsole){
+        if(this.containsGameConsole(gameConsole)){
+            this.listGameConsoles.remove(gameConsole);
+        }else{
+            JOptionPane.showMessageDialog(null, this.listGameConsoles.toString()
+                    +"nie zawiera "+gameConsole.toString(), "Błąd w "+this.toString(),
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public boolean containsGameConsole(gameGUI.GameConsole gameConsole){
+        return this.listGameConsoles.contains(gameConsole);
     }
 
 }

@@ -5,25 +5,23 @@
  */
 package gameWindows;
 
-import gameGUI.GameConsole;
+import gameGUI.GameImage;
 
 /**
  *
  * @author Dmitrij
  */
 public class MainWindow extends javax.swing.JFrame {
+    public GameImage gI;
+    public int index=0;
 
     /**
      * Creates new form mainWindow
      */
     public MainWindow() {
         initComponents();
-        gameConsole.write("Zwykły tekst");
-        gameConsole.write("Bold tekst");
-        gameConsole.write("Italic tekst");
-        gameConsole.writeln("Zwykły tekst");
-        gameConsole.writeln("Bold tekst");
-        gameConsole.writeln("Italic tekst");
+        gI=new GameImage(512, 256, 8, "test.png");
+        
     }
 
     /**
@@ -35,24 +33,17 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        gameScrollPane1 = new gameGUI.GameScrollPane();
-        gameConsole = new gameGUI.GameConsole();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        gameConsole.setColumns(20);
-        gameConsole.setRows(5);
-        gameScrollPane1.setViewportView(gameConsole);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(gameScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+            .addGap(0, 469, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(gameScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+            .addGap(0, 378, Short.MAX_VALUE)
         );
 
         pack();
@@ -93,9 +84,9 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private gameGUI.GameConsole gameConsole;
-    private gameGUI.GameScrollPane gameScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
