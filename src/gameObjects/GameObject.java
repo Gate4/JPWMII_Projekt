@@ -8,23 +8,42 @@ public abstract class GameObject implements java.io.Serializable{
 
     private int x;
     private int y;
-    private byte imageIndex;
-    private byte frameIndex;
+    private int imageIndex;
+    private int frameIndex;
     private int graphicX;
     private int graphicY;
-    private double graphicScaleX;
-    private double graphicScaleY;
     private double graphicRotation;
 
-    public void paint(java.awt.Graphics graphic){
+    public GameObject(int x, int y, int imageIndex, int frameIndex, int graphicX, int graphicY, double graphicRotation) {
+        this.x = x;
+        this.y = y;
+        this.imageIndex = imageIndex;
+        this.frameIndex = frameIndex;
+        this.graphicX = graphicX;
+        this.graphicY = graphicY;
+        this.graphicRotation = graphicRotation;
+    }
+    
+    public void paint(java.awt.Graphics graphic, double scaleX, double scaleY){
         java.awt.Graphics2D g2D=(java.awt.Graphics2D)graphic.create();
         java.awt.image.BufferedImage frame=gameSingletons.GameGraphics.getInstance().getGameImage(this.imageIndex).getFrame(this.frameIndex);
         g2D.rotate(Math.toRadians(this.graphicRotation),this.x+frame.getWidth()/2,this.y+frame.getHeight()/2);
-        g2D.scale(this.graphicScaleX, this.graphicScaleY);
+        g2D.scale(scaleX, scaleY);
         g2D.drawImage(frame,this.graphicX, this.graphicY, null);
     }
 
-    public abstract void nextFrame();
+    public void nextFrame(){
+        java.awt.image.BufferedImage frame=gameSingletons.GameGraphics.getInstance().getGameImage(this.imageIndex).getFrame(this.frameIndex);
+        int width=frame.getWidth();
+        int height=frame.getHeight();
+        
+        if(graphicX!=x*width){
+            this.setGraphicX(graphicX+(x-graphicX));
+        }
+        if(graphicY!=y){
+            this.setGraphicY(graphicY+(y-graphicY));
+        }
+    }
     
     public void move(int xDirection, int yDirection, int distanceX, int distanceY){
         if(xDirection!=0)xDirection/=Math.abs(xDirection);
@@ -58,19 +77,19 @@ public abstract class GameObject implements java.io.Serializable{
         this.y = y;
     }
 
-    public byte getImageIndex() {
+    public int getImageIndex() {
         return imageIndex;
     }
 
-    public void setImageIndex(byte imageIndex) {
+    public void setImageIndex(int imageIndex) {
         this.imageIndex = imageIndex;
     }
 
-    public byte getFrameIndex() {
+    public int getFrameIndex() {
         return frameIndex;
     }
 
-    public void setFrameIndex(byte frameIndex) {
+    public void setFrameIndex(int frameIndex) {
         this.frameIndex = frameIndex;
     }
 
@@ -88,22 +107,6 @@ public abstract class GameObject implements java.io.Serializable{
 
     public void setGraphicY(int graphicY) {
         this.graphicY = graphicY;
-    }
-
-    public double getGraphicScaleX() {
-        return graphicScaleX;
-    }
-
-    public void setGraphicScaleX(double graphicScaleX) {
-        this.graphicScaleX = graphicScaleX;
-    }
-
-    public double getGraphicScaleY() {
-        return graphicScaleY;
-    }
-
-    public void setGraphicScaleY(double graphicScaleY) {
-        this.graphicScaleY = graphicScaleY;
     }
 
     public double getGraphicRotation() {

@@ -5,8 +5,16 @@ package gameObjects;
  * @author Maciej Żak
  */
 public abstract class GameEnemy extends GameCharacter{
-    private String name;
-    private byte aiIndex;
+    private int expReward;
+    private int aiIndex;
+
+    public GameEnemy(int expReward, int aiIndex, String name, int health, int maxHealth, int attack,
+            int defense, int magicAttack, int magicDefense, int level, int x, int y,
+            int imageIndex, int frameIndex, int graphicX, int graphicY, double graphicRotation) {
+        super(name, health, maxHealth, attack, defense, magicAttack, magicDefense, level, x, y, imageIndex, frameIndex, graphicX, graphicY, graphicRotation);
+        this.expReward=expReward;
+        this.aiIndex = aiIndex;
+    }
     
     public void takeTurn(){
         gameAI.GameAI ai=null;

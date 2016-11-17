@@ -8,6 +8,7 @@ public class GameScrollPane extends javax.swing.JScrollPane{
 
     public GameScrollPane() {
         super();
+        this.getViewport().setBackground(java.awt.Color.BLACK);
         this.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.YELLOW));
         javax.swing.JPanel panel = new javax.swing.JPanel();
         panel.setBackground(java.awt.Color.BLACK);

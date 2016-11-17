@@ -6,6 +6,7 @@
 package gameWindows;
 
 import gameGUI.GameImage;
+import gameObjects.GameData;
 
 /**
  *
@@ -20,8 +21,9 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow() {
         initComponents();
+        this.getContentPane().setBackground(java.awt.Color.BLACK);
         gI=new GameImage(512, 256, 8, "test.png");
-        
+        gameScreen1.setGameData(new GameData());
     }
 
     /**
@@ -33,17 +35,47 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        gameScrollPane2 = new gameGUI.GameScrollPane();
+        gameScrollPane3 = new gameGUI.GameScrollPane();
+        gameConsole1 = new gameGUI.GameConsole();
+        jPanel2 = new javax.swing.JPanel();
+        gameScreen1 = new gameGUI.GameScreen();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Dragon Slayer 1.5 - autor: Maciej Żak");
+        setBackground(new java.awt.Color(0, 0, 0));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        gameScrollPane2.setBackground(java.awt.Color.black);
+        gameScrollPane2.setForeground(java.awt.Color.yellow);
+
+        gameConsole1.setColumns(20);
+        gameConsole1.setRows(5);
+        gameScrollPane3.setViewportView(gameConsole1);
+
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        gameScreen1.setPreferredSize(new java.awt.Dimension(352, 352));
+        jPanel2.add(gameScreen1, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 469, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(gameScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(gameScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 378, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(gameScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(gameScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -88,5 +120,10 @@ public class MainWindow extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private gameGUI.GameConsole gameConsole1;
+    private gameGUI.GameScreen gameScreen1;
+    private gameGUI.GameScrollPane gameScrollPane2;
+    private gameGUI.GameScrollPane gameScrollPane3;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
