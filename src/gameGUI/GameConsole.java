@@ -23,7 +23,8 @@ public class GameConsole extends javax.swing.JTextArea{
     }
     
     public void write(Object object){
-        this.insert(object.toString(), 0);
+        this.insert(object.toString(),0);
+        this.setCaretPosition(0);
     }
     
     public void writeln(Object object){

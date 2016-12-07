@@ -21,7 +21,19 @@ public abstract class GameEnemy extends GameCharacter{
         if(this.aiIndex==0){
             ai=new gameAI.AIWarrior();
         }
-        ai.takeTurn(this);
+        if(ai!=null){
+            ai.takeTurn(this);
+        }
+    }
+    
+    @Override
+    public void rest() {
+        int health=getHealth();
+        int maxHealth=getMaxHealth();
+        if(health<maxHealth){
+            setHealth(health+15);
+            if(getHealth()>maxHealth)setHealth(maxHealth);
+        }
     }
     
 }
