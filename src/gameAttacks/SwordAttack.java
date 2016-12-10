@@ -34,6 +34,7 @@ public class SwordAttack extends GameAttack{
         setMarkedToRemove(true);
         GameLogic.getInstance().nextTurn();
         GameLogic.getInstance().setBusy(false);
+        //
     }
     
     
