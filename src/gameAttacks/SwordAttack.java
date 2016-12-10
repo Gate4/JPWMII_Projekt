@@ -16,7 +16,7 @@ public class SwordAttack extends GameAttack{
         super(x, y, 27, 0, attack,150);
         GameLogic.getInstance().dealDamageAtXY(attack, x, y);
         GameSounds.getInstance().playSound("attack0.wav");
-        
+        GameLogic.getInstance().setBusy(true);
     }
 
     @Override
@@ -33,6 +33,7 @@ public class SwordAttack extends GameAttack{
     public void actionPerformed(ActionEvent ae) {
         setMarkedToRemove(true);
         GameLogic.getInstance().nextTurn();
+        GameLogic.getInstance().setBusy(false);
     }
     
     
