@@ -41,10 +41,7 @@ public abstract class GameObject extends Observable{
         java.awt.Graphics2D g2D=(java.awt.Graphics2D)graphic.create();
         java.awt.image.BufferedImage frame=gameSingletons.GameGraphics.getInstance().getGameImage(this.imageIndex).getFrame(this.frameIndex);
         //g2D.rotate(Math.toRadians(this.graphicRotation),this.x+frame.getWidth()/2,this.y+frame.getHeight()/2);
-        g2D.drawImage(frame.getScaledInstance(gameSingletons.GameGraphics.DEFAULT_TILE_SIZE, gameSingletons.GameGraphics.DEFAULT_TILE_SIZE,java.awt.image.BufferedImage.SCALE_REPLICATE),this.graphicX, this.graphicY, null);
-    }
-
-    public void nextFrame(){
+        g2D.drawImage(frame.getScaledInstance(gameSingletons.GameGraphics.DEFAULT_TILE_SIZE, gameSingletons.GameGraphics.DEFAULT_TILE_SIZE,java.awt.image.BufferedImage.SCALE_SMOOTH),this.graphicX, this.graphicY, null);
     }
     
     
@@ -157,6 +154,7 @@ public abstract class GameObject extends Observable{
     @Override
     public synchronized void addObserver(Observer obsrvr) {
         observers.add(obsrvr);
+        notifyObservers();
     }
 
     @Override

@@ -1,6 +1,9 @@
 package gameGUI;
 
+import gameObjects.GameAttack;
+import gameObjects.GameCharacter;
 import gameObjects.GameData;
+import gameObjects.GameItem;
 import gameObjects.GameRoom;
 import gameSingletons.GameLogic;
 import java.awt.AlphaComposite;
@@ -52,6 +55,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
     private final String SPELL_SE="Sse";
     private final String SPELL_SW="Ssw";
     private final String REST="res";
+    private final String PICK="pick";
     
 
     
@@ -131,7 +135,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
                         + "atak w podanym kierunku\nCtrl+kierunek - rzucenie"
                         + "wybranego zaklęcia w podanym kierunku\nSpacja - "
                         + "odpoczynek (regeneracja życia) - niemożliwy w pobliżu "
-                        + "przeciwników\nH - wyświetlenie pomocy";
+                        + "przeciwników\nF - podniesienie przedmiotu\nH - wyświetlenie pomocy";
                 gameSingletons.GameLogic.getInstance().writelnInConsole(message);
             }
         });
@@ -140,7 +144,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if(aktywny)swiat.getInstance().atakGracza(0, -1);
+                GameLogic.getInstance().swordAttackInDirection(GameLogic.NORTH);
             }
         });
         
@@ -148,7 +152,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if(aktywny)swiat.getInstance().atakGracza(0, 1);
+                GameLogic.getInstance().swordAttackInDirection(GameLogic.SOUTH);
             }
         });
         
@@ -156,7 +160,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if(aktywny)swiat.getInstance().atakGracza(1, 0);
+                GameLogic.getInstance().swordAttackInDirection(GameLogic.EAST);
             }
         });
         
@@ -164,7 +168,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if(aktywny)swiat.getInstance().atakGracza(-1, 0);
+                GameLogic.getInstance().swordAttackInDirection(GameLogic.WEST);
             }
         });
 
@@ -172,7 +176,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if(aktywny)swiat.getInstance().atakGracza(1, -1);
+                GameLogic.getInstance().swordAttackInDirection(GameLogic.NORTHEAST);
             }
         });
         
@@ -180,7 +184,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if(aktywny)swiat.getInstance().atakGracza(-1, -1);
+                GameLogic.getInstance().swordAttackInDirection(GameLogic.NORTHWEST);
             }
         });
         
@@ -188,7 +192,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if(aktywny)swiat.getInstance().atakGracza(1, 1);
+                GameLogic.getInstance().swordAttackInDirection(GameLogic.SOUTHEAST);
             }
         });
         
@@ -196,7 +200,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if(aktywny)swiat.getInstance().atakGracza(-1, 1);
+                GameLogic.getInstance().swordAttackInDirection(GameLogic.SOUTHWEST);
             }
         });
         
@@ -204,7 +208,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if(aktywny)swiat.getInstance().czarGracza(0, -1);
+                GameLogic.getInstance().spellInDirection(gameData.getPlayer().getSpell(), GameLogic.NORTH);
             }
         });
         
@@ -212,7 +216,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if(aktywny)swiat.getInstance().czarGracza(0, 1);
+                GameLogic.getInstance().spellInDirection(gameData.getPlayer().getSpell(), GameLogic.SOUTH);
             }
         });
        
@@ -220,7 +224,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if(aktywny)swiat.getInstance().czarGracza(1, 0);
+                GameLogic.getInstance().spellInDirection(gameData.getPlayer().getSpell(), GameLogic.EAST);
             }
         });
         
@@ -228,7 +232,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if(aktywny)swiat.getInstance().czarGracza(-1, 0);
+                GameLogic.getInstance().spellInDirection(gameData.getPlayer().getSpell(), GameLogic.WEST);
             }
         });
         
@@ -236,7 +240,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if(aktywny)swiat.getInstance().czarGracza(1, -1);
+                GameLogic.getInstance().spellInDirection(gameData.getPlayer().getSpell(), GameLogic.NORTHEAST);
             }
         });
         
@@ -244,7 +248,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if(aktywny)swiat.getInstance().czarGracza(-1, -1);
+                GameLogic.getInstance().spellInDirection(gameData.getPlayer().getSpell(), GameLogic.NORTHWEST);
             }
         });
         
@@ -252,7 +256,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if(aktywny)swiat.getInstance().czarGracza(1, 1);
+                GameLogic.getInstance().spellInDirection(gameData.getPlayer().getSpell(), GameLogic.SOUTHEAST);
             }
         });
         
@@ -260,7 +264,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if(aktywny)swiat.getInstance().czarGracza(-1, 1);
+                GameLogic.getInstance().spellInDirection(gameData.getPlayer().getSpell(), GameLogic.SOUTHWEST);
             }
         });
         
@@ -271,6 +275,15 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
                 GameLogic.getInstance().rest();
             }
         });
+        
+        this.getActionMap().put(PICK, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GameLogic.getInstance().pickItemAtXY(gameData.getPlayer().getX(), gameData.getPlayer().getY());
+            }
+        });
+        
+        
 
         InputMap input=this.getInputMap();
         input.put(KeyStroke.getKeyStroke("W"), GO_N);
@@ -299,6 +312,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
         input.put(KeyStroke.getKeyStroke("control C"), SPELL_SE);
         input.put(KeyStroke.getKeyStroke("control Z"), SPELL_SW);
         input.put(KeyStroke.getKeyStroke(' '), REST);
+        input.put(KeyStroke.getKeyStroke("F"), PICK);
         
     }
     
@@ -324,8 +338,11 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
             g2D.setComposite(AlphaComposite.Clear);
             g2D.fillRect(0, 0, width, height); 
             g2D.setComposite(AlphaComposite.SrcOver);
+            for(GameCharacter gC:gameData.getCurrentRoom().getEnemies())paintObject(g2D, gC);
+            for(GameItem gI:gameData.getCurrentRoom().getItems())paintObject(g2D, gI);
             paintObject(g2D, gameData.getPlayer());
-            g.drawImage(this.backgroundImage.getScaledInstance(width, height, java.awt.image.BufferedImage.SCALE_SMOOTH), 0, 0, null);
+            for(GameAttack gA:gameData.getAttacks())if(!gA.isFinished())paintObject(g2D, gA);
+            g.drawImage(this.backgroundImage.getScaledInstance(width, height, java.awt.image.BufferedImage.SCALE_FAST), 0, 0, null);
             g.drawImage(this.foregroundImage.getScaledInstance(width, height, java.awt.image.BufferedImage.SCALE_SMOOTH), 0, 0, null);
         }else{
             
@@ -354,6 +371,8 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
         //nextFrames
         if(gameData!=null){
             gameData.getPlayer().nextFrame();
+            for(GameCharacter gC:gameData.getCurrentRoom().getEnemies())gC.nextFrame();
+            for(GameAttack gA:gameData.getAttacks())if(!gA.isFinished())gA.nextFrame();
             repaint();
         }
     }

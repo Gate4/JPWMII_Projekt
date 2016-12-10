@@ -1,5 +1,8 @@
 package gameObjects;
 
+import gameObjects.gameEnemies.EnemyGhul;
+import gameObjects.gameEnemies.EnemySkeleton;
+import gameObjects.gameEnemies.EnemyZombie;
 import gameSingletons.GameLogic;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +15,6 @@ public class GameData implements java.io.Serializable{
     private boolean worldGenerated=false;
     private List<GameRoom> world;
     
-    private GameEnemy currentEnemy;
     private GameRoom currentRoom;
     private GamePlayer player;
     
@@ -25,13 +27,22 @@ public class GameData implements java.io.Serializable{
     
     public static final int GENERATOR_START_X=4;
     public static final int GENERATOR_START_Y=4;
+    
+    public static final int WEAPONS_PER_FLOOR=3;
+    public static final int ARMORS_PER_FLOOR=3;
+    
+    public static final int SKELETONS_PER_FLOOR=3;
+    public static final int ZOMBIES_PER_FLOOR=2;
+    public static final int GHULS_PER_FLOOR=1;
+    
+    private List<GameAttack> attacks;
 
     
     public GameData() {
         generateWorld();
         this.currentRoom=this.world.get(0);
-        this.player=new GamePlayer("Gracz", 5, 5);
-        
+        this.player=new GamePlayer("Gracz", 5, 9);
+        this.attacks=new ArrayList<>();
     }
     
     
@@ -41,6 +52,8 @@ public class GameData implements java.io.Serializable{
         this.world=new ArrayList<>(FLOORS*ROOMS_PER_FLOOR);
         if(!this.worldGenerated){
             this.generateWorldLayout();
+            this.generateItems();
+            this.generateEnemies();
             this.worldGenerated=true;
         }else{
             javax.swing.JOptionPane.showMessageDialog(null, "Świat został już wygenerowany",
@@ -88,6 +101,46 @@ public class GameData implements java.io.Serializable{
         
         
         
+    }
+    
+    private void generateItems(){
+        for(int floor=0;floor<FLOORS;floor++){
+            for(int i=0;i<WEAPONS_PER_FLOOR;i++){
+                int index=(floor*ROOMS_PER_FLOOR)+1+(int)Math.floor(Math.random()*(ROOMS_PER_FLOOR-2));
+                int x=1+(int)Math.floor(Math.random()*(GameRoom.DEFAULT_WIDTH-2));
+                int y=1+(int)Math.floor(Math.random()*(GameRoom.DEFAULT_HEIGHT-2));
+                world.get(index).getItems().add(new GameItem(x, y, GameItem.TYPE_WEAPON, floor));
+            }
+            for(int i=0;i<ARMORS_PER_FLOOR;i++){
+                int index=(floor*ROOMS_PER_FLOOR)+1+(int)Math.floor(Math.random()*(ROOMS_PER_FLOOR-2));
+                int x=1+(int)Math.floor(Math.random()*(GameRoom.DEFAULT_WIDTH-2));
+                int y=1+(int)Math.floor(Math.random()*(GameRoom.DEFAULT_HEIGHT-2));
+                world.get(index).getItems().add(new GameItem(x, y, GameItem.TYPE_ARMOR, floor));
+            }
+        }
+    }
+    
+    private void generateEnemies(){
+        for(int floor=0;floor<FLOORS;floor++){
+            for(int i=0;i<SKELETONS_PER_FLOOR;i++){
+                int index=(floor*ROOMS_PER_FLOOR)+1+(int)Math.floor(Math.random()*(ROOMS_PER_FLOOR-2));
+                int x=2+(int)Math.floor(Math.random()*(GameRoom.DEFAULT_WIDTH-4));
+                int y=2+(int)Math.floor(Math.random()*(GameRoom.DEFAULT_HEIGHT-4));
+                world.get(index).getEnemies().add(new EnemySkeleton(x, y, floor));
+            }
+            for(int i=0;i<ZOMBIES_PER_FLOOR;i++){
+                int index=(floor*ROOMS_PER_FLOOR)+1+(int)Math.floor(Math.random()*(ROOMS_PER_FLOOR-2));
+                int x=2+(int)Math.floor(Math.random()*(GameRoom.DEFAULT_WIDTH-4));
+                int y=2+(int)Math.floor(Math.random()*(GameRoom.DEFAULT_HEIGHT-4));
+                world.get(index).getEnemies().add(new EnemyZombie(x, y, floor));
+            }
+            for(int i=0;i<GHULS_PER_FLOOR;i++){
+                int index=(floor*ROOMS_PER_FLOOR)+1+(int)Math.floor(Math.random()*(ROOMS_PER_FLOOR-2));
+                int x=2+(int)Math.floor(Math.random()*(GameRoom.DEFAULT_WIDTH-4));
+                int y=2+(int)Math.floor(Math.random()*(GameRoom.DEFAULT_HEIGHT-4));
+                world.get(index).getEnemies().add(new EnemyGhul(x, y, floor));
+            }
+        }
     }
     
     private boolean findRoomXY(int f,int x,int y){
@@ -138,8 +191,16 @@ public class GameData implements java.io.Serializable{
         System.out.println("NOWY POKOJ\nX="+gR.getX()+" Y="+gR.getY()+" PIETRO="+gR.getFloor());
         gR.setVisited(true);
         this.currentRoom=gR;
-        this.player.setX(nX);
-        this.player.setY(nY);
+        GameLogic.getInstance().setEnemiesIterator(gR.getEnemies().iterator());
+        this.player.moveTo(nX, nY);
+    }
+
+    public List<GameRoom> getWorld() {
+        return world;
+    }
+
+    public synchronized List<GameAttack> getAttacks() {
+        return attacks;
     }
     
     

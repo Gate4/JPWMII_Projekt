@@ -2,10 +2,15 @@ package gameWindows;
 
 import gameGUI.GameConsole;
 import gameGUI.GameImage;
+import gameObjects.GameAttack;
 import gameObjects.GameData;
+import gameObjects.GameItem;
 import gameObjects.GamePlayer;
+import gameSingletons.GameLogic;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.DefaultListModel;
+import javax.swing.ListModel;
 
 /**
  *
@@ -56,6 +61,14 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
         jLabel10 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        gameScrollPane1 = new gameGUI.GameScrollPane();
+        jList3 = new javax.swing.JList();
+        gameScrollPane4 = new gameGUI.GameScrollPane();
+        jList4 = new javax.swing.JList();
+        jButton5 = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
         gameScrollPane3 = new gameGUI.GameScrollPane();
         gameConsole1 = new gameGUI.GameConsole();
         jPanel2 = new javax.swing.JPanel();
@@ -126,9 +139,9 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
         jButton1.setBorder(null);
         jButton1.setBorderPainted(false);
         jButton1.setContentAreaFilled(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
             }
         });
 
@@ -139,11 +152,80 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
         jButton2.setBorder(null);
         jButton2.setBorderPainted(false);
         jButton2.setContentAreaFilled(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
             }
         });
+
+        jButton3.setBackground(java.awt.Color.yellow);
+        jButton3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton3.setForeground(java.awt.Color.yellow);
+        jButton3.setText("Używaj");
+        jButton3.setBorder(new javax.swing.border.LineBorder(java.awt.Color.yellow, 1, true));
+        jButton3.setContentAreaFilled(false);
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
+
+        jButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton4.setForeground(java.awt.Color.yellow);
+        jButton4.setText("Wyrzuć");
+        jButton4.setBorder(new javax.swing.border.LineBorder(java.awt.Color.yellow, 1, true));
+        jButton4.setContentAreaFilled(false);
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton4MouseClicked(evt);
+            }
+        });
+
+        gameScrollPane1.setPreferredSize(new java.awt.Dimension(30, 75));
+
+        jList3.setBackground(java.awt.Color.black);
+        jList3.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
+        jList3.setForeground(java.awt.Color.yellow);
+        jList3.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jList3.setSelectionBackground(java.awt.Color.yellow);
+        jList3.setSelectionForeground(java.awt.Color.black);
+        jList3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList3MouseClicked(evt);
+            }
+        });
+        gameScrollPane1.setViewportView(jList3);
+
+        jList4.setBackground(java.awt.Color.black);
+        jList4.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
+        jList4.setForeground(java.awt.Color.yellow);
+        jList4.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jList4.setSelectionBackground(java.awt.Color.yellow);
+        jList4.setSelectionForeground(java.awt.Color.black);
+        gameScrollPane4.setViewportView(jList4);
+
+        jButton5.setBackground(java.awt.Color.yellow);
+        jButton5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton5.setForeground(java.awt.Color.yellow);
+        jButton5.setText("Używaj");
+        jButton5.setBorder(new javax.swing.border.LineBorder(java.awt.Color.yellow, 1, true));
+        jButton5.setContentAreaFilled(false);
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton5MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 169, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -152,6 +234,7 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jProgressBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -175,13 +258,35 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(gameScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(gameScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addGap(10, 10, 10)
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(245, Short.MAX_VALUE)
+                .addGap(9, 9, 9)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4)
+                    .addComponent(jButton5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(gameScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(gameScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
@@ -220,6 +325,7 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
 
         gameConsole1.setColumns(20);
         gameConsole1.setRows(5);
+        gameConsole1.setText("");
         gameScrollPane3.setViewportView(gameConsole1);
 
         jPanel2.setBorder(new javax.swing.border.LineBorder(java.awt.Color.yellow, 1, true));
@@ -260,7 +366,7 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(gameScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(gameScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -273,13 +379,37 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
         newGame();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        GamePlayer p=gameData.getPlayer();
+        if(p.getSkillPoints()>0){
+            p.removeSkillPoints(1);
+            p.incrIntelligence(1);
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+       GamePlayer p=gameData.getPlayer();
+        if(p.getSkillPoints()>0){
+            p.removeSkillPoints(1);
+            p.incrStrength(1);
+        }
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jList3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList3MouseClicked
+        GameLogic.getInstance().writelnInConsole(gameData.getPlayer().getItemDescription(jList3.getSelectedIndex()));
+    }//GEN-LAST:event_jList3MouseClicked
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        gameData.getPlayer().equipItem(jList3.getSelectedIndex());
+    }//GEN-LAST:event_jButton3MouseClicked
+
+    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
+        GameLogic.getInstance().dropItem(jList3.getSelectedIndex());
+    }//GEN-LAST:event_jButton4MouseClicked
+
+    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+        gameData.getPlayer().setSpell(jList4.getSelectedIndex());
+    }//GEN-LAST:event_jButton5MouseClicked
 
     /**
      * @param args the command line arguments
@@ -322,10 +452,15 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private gameGUI.GameConsole gameConsole1;
     private gameGUI.GameScreen gameScreen1;
+    private gameGUI.GameScrollPane gameScrollPane1;
     private gameGUI.GameScrollPane gameScrollPane2;
     private gameGUI.GameScrollPane gameScrollPane3;
+    private gameGUI.GameScrollPane gameScrollPane4;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -336,12 +471,15 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JList jList3;
+    private javax.swing.JList jList4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JSeparator jSeparator1;
@@ -371,6 +509,14 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
         this.jLabel10.setText(""+player.getStrength());
         this.jButton1.setVisible(player.getSkillPoints()>0);
         this.jButton2.setVisible(player.getSkillPoints()>0);
+        DefaultListModel<String> model = new DefaultListModel<>();
+        for(GameItem gI : player.getItems())
+            model.addElement(gI.getName());
+        this.jList3.setModel(model);
+        model = new DefaultListModel<>();
+        for(String gS : player.getSpells())
+            model.addElement(gS);
+        this.jList4.setModel(model);
     }
 
     

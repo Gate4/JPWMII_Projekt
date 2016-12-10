@@ -14,7 +14,7 @@ public class GameRoom implements java.io.Serializable{
     private java.util.List<GameTilePassage> passages;
     
     private java.util.List<GameEnemy> enemies;
-    private java.util.List<GamePlayer> players;
+    private java.util.List<GameItem> items;
     private int x;
     private int y;
     private int floor;
@@ -34,6 +34,7 @@ public class GameRoom implements java.io.Serializable{
         this.floor = floor;
         this.enemies=new java.util.ArrayList<>();
         this.passages=new java.util.ArrayList<>();
+        this.items=new java.util.ArrayList<>();
         this.roomLayout=this.createLayout(type,floor);
     }
 
@@ -143,6 +144,10 @@ public class GameRoom implements java.io.Serializable{
 
     public List<GameEnemy> getEnemies() {
         return enemies;
+    }
+
+    public List<GameItem> getItems() {
+        return items;
     }
     
     

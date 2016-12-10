@@ -1,5 +1,7 @@
 package gameObjects;
 
+import gameGUI.GameImage;
+import gameSingletons.GameGraphics;
 import gameSingletons.GameLogic;
 
 /**
@@ -29,7 +31,6 @@ public abstract class GameCharacter extends GameObject{
         this.level = level;
     }
 
-    @Override
     public void nextFrame() {
         int width=gameSingletons.GameGraphics.DEFAULT_TILE_SIZE;
         int height=gameSingletons.GameGraphics.DEFAULT_TILE_SIZE;
@@ -53,11 +54,33 @@ public abstract class GameCharacter extends GameObject{
             if(isAnimating()){
                 setAnimating(false);
                 GameLogic.getInstance().setBusy(false);
+            }else{
+                
             }
         }
     }
     
+    public void giveNormalDamage(int attack){
+        int damage=attack-(int)(Math.round((0.01 *(getDefense()/2))*attack));
+        if (damage <= 0) {
+            damage = 1;
+        }
+        this.health-=damage;
+        GameLogic.getInstance().writelnInConsole(name+" otrzymuje "+damage+" punktów obrazeń fizycznych!");
+        if(!isAlive())GameLogic.getInstance().writelnInConsole(name+" ginie!");
+        notifyObservers();
+    }
     
+    public void giveMagicDamage(int magicAttack,int spellPower){
+        int damage = (int) (Math.round((spellPower + magicAttack)) - ((spellPower + magicAttack) * (getMagicDefense()/2) * 0.01));
+        if (damage <= 0) {
+            damage = 1;
+        }
+        this.health-=damage;
+        GameLogic.getInstance().writelnInConsole(name+" otrzymuje "+damage+" punktów obrazeń magicznych!");
+        if(!isAlive())GameLogic.getInstance().writelnInConsole(name+" ginie!");
+        notifyObservers();
+    }
     
     public boolean isAlive(){
         return this.health>0;

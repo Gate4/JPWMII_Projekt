@@ -1,5 +1,7 @@
 package gameObjects;
 
+import gameSingletons.GameLogic;
+
 /**
  *
  * @author Maciej Żak
@@ -35,5 +37,11 @@ public abstract class GameEnemy extends GameCharacter{
             if(getHealth()>maxHealth)setHealth(maxHealth);
         }
     }
+
+    public int getExpReward() {
+        return expReward;
+    }
+    
+    
     
 }
