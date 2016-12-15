@@ -1,7 +1,9 @@
 package gameObjects;
 
 import gameObjects.gameEnemies.EnemyGhul;
+import gameObjects.gameEnemies.EnemyMage;
 import gameObjects.gameEnemies.EnemySkeleton;
+import gameObjects.gameEnemies.EnemyWraith;
 import gameObjects.gameEnemies.EnemyZombie;
 import gameSingletons.GameLogic;
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ public class GameData implements java.io.Serializable{
     private GamePlayer player;
     
     public static final int FLOORS=5;
-    public static final int ROOMS_PER_FLOOR=10;//8
+    public static final int ROOMS_PER_FLOOR=12;//8
     public static final int MIN_X_ROOM=0;
     public static final int MIN_Y_ROOM=0;
     public static final int MAX_X_ROOM=9;
@@ -34,6 +36,8 @@ public class GameData implements java.io.Serializable{
     public static final int SKELETONS_PER_FLOOR=3;
     public static final int ZOMBIES_PER_FLOOR=2;
     public static final int GHULS_PER_FLOOR=1;
+    public static final int WRAITHS_PER_FLOOR=3;
+    public static final int MAGES_PER_FLOOR=2;
     
     private List<GameAttack> attacks;
 
@@ -41,7 +45,7 @@ public class GameData implements java.io.Serializable{
     public GameData() {
         generateWorld();
         this.currentRoom=this.world.get(0);
-        this.player=new GamePlayer("Gracz", 5, 9);
+        this.player=new GamePlayer("Gracz", 5, 5);
         this.attacks=new ArrayList<>();
     }
     
@@ -140,6 +144,18 @@ public class GameData implements java.io.Serializable{
                 int y=2+(int)Math.floor(Math.random()*(GameRoom.DEFAULT_HEIGHT-4));
                 world.get(index).getEnemies().add(new EnemyGhul(x, y, floor));
             }
+            for(int i=0;i<WRAITHS_PER_FLOOR;i++){
+                int index=(floor*ROOMS_PER_FLOOR)+1+(int)Math.floor(Math.random()*(ROOMS_PER_FLOOR-2));
+                int x=2+(int)Math.floor(Math.random()*(GameRoom.DEFAULT_WIDTH-4));
+                int y=2+(int)Math.floor(Math.random()*(GameRoom.DEFAULT_HEIGHT-4));
+                world.get(index).getEnemies().add(new EnemyWraith(x, y, floor));
+            }
+            for(int i=0;i<MAGES_PER_FLOOR;i++){
+                int index=(floor*ROOMS_PER_FLOOR)+1+(int)Math.floor(Math.random()*(ROOMS_PER_FLOOR-2));
+                int x=2+(int)Math.floor(Math.random()*(GameRoom.DEFAULT_WIDTH-4));
+                int y=2+(int)Math.floor(Math.random()*(GameRoom.DEFAULT_HEIGHT-4));
+                world.get(index).getEnemies().add(new EnemyMage(x, y, floor));
+            }
         }
     }
     
@@ -188,7 +204,6 @@ public class GameData implements java.io.Serializable{
     }
     
     public void setCurrentRoom(GameRoom gR,int nX,int nY){
-        System.out.println("NOWY POKOJ\nX="+gR.getX()+" Y="+gR.getY()+" PIETRO="+gR.getFloor());
         gR.setVisited(true);
         this.currentRoom=gR;
         GameLogic.getInstance().setEnemiesIterator(gR.getEnemies().iterator());
@@ -202,11 +217,6 @@ public class GameData implements java.io.Serializable{
     public synchronized List<GameAttack> getAttacks() {
         return attacks;
     }
-    
-    
-    
-    
-    //LISTY albo indeks do losowego generrowania
 
     public GamePlayer getPlayer() {
         return player;

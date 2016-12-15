@@ -165,8 +165,8 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
         jButton3.setBorder(new javax.swing.border.LineBorder(java.awt.Color.yellow, 1, true));
         jButton3.setContentAreaFilled(false);
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton3MouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton3MousePressed(evt);
             }
         });
 
@@ -176,8 +176,8 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
         jButton4.setBorder(new javax.swing.border.LineBorder(java.awt.Color.yellow, 1, true));
         jButton4.setContentAreaFilled(false);
         jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton4MouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton4MousePressed(evt);
             }
         });
 
@@ -193,6 +193,9 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jList3MouseClicked(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jList3MousePressed(evt);
+            }
         });
         gameScrollPane1.setViewportView(jList3);
 
@@ -202,6 +205,11 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
         jList4.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jList4.setSelectionBackground(java.awt.Color.yellow);
         jList4.setSelectionForeground(java.awt.Color.black);
+        jList4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jList4MousePressed(evt);
+            }
+        });
         gameScrollPane4.setViewportView(jList4);
 
         jButton5.setBackground(java.awt.Color.yellow);
@@ -211,8 +219,8 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
         jButton5.setBorder(new javax.swing.border.LineBorder(java.awt.Color.yellow, 1, true));
         jButton5.setContentAreaFilled(false);
         jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton5MouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton5MousePressed(evt);
             }
         });
 
@@ -346,6 +354,11 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Zakończ");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
@@ -396,20 +409,32 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jList3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList3MouseClicked
-        GameLogic.getInstance().writelnInConsole(gameData.getPlayer().getItemDescription(jList3.getSelectedIndex()));
+        
     }//GEN-LAST:event_jList3MouseClicked
 
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jButton3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MousePressed
         gameData.getPlayer().equipItem(jList3.getSelectedIndex());
-    }//GEN-LAST:event_jButton3MouseClicked
+    }//GEN-LAST:event_jButton3MousePressed
 
-    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
+    private void jButton4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MousePressed
         GameLogic.getInstance().dropItem(jList3.getSelectedIndex());
-    }//GEN-LAST:event_jButton4MouseClicked
+    }//GEN-LAST:event_jButton4MousePressed
 
-    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+    private void jButton5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MousePressed
         gameData.getPlayer().setSpell(jList4.getSelectedIndex());
-    }//GEN-LAST:event_jButton5MouseClicked
+    }//GEN-LAST:event_jButton5MousePressed
+
+    private void jList4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList4MousePressed
+        GameLogic.getInstance().writelnInConsole(gameData.getPlayer().getSpellDescription(jList4.getSelectedIndex()));
+    }//GEN-LAST:event_jList4MousePressed
+
+    private void jList3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList3MousePressed
+        GameLogic.getInstance().writelnInConsole(gameData.getPlayer().getItemDescription(jList3.getSelectedIndex()));
+    }//GEN-LAST:event_jList3MousePressed
 
     /**
      * @param args the command line arguments
@@ -488,15 +513,15 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
     public void newGame(){
         this.gameData=new GameData();
         gameScreen1.setGameData(gameData);
+        gameConsole1.clear();
+        gameConsole1.writeln("Naciśnij H aby dowiedzieć się jak grać");
         gameSingletons.GameLogic.getInstance().setGameConsole(gameConsole1);
         gameSingletons.GameLogic.getInstance().setGameData(gameData);
         gameData.getPlayer().addObserver(this);
-        
     }
     
     @Override
     public void update(Observable o, Object o1) {
-        System.out.println("ZNOTYFIKOWANO MNIE");
         GamePlayer player=gameData.getPlayer();
         this.jProgressBar1.setMaximum(player.getMaxHealth());
         this.jProgressBar1.setValue(player.getHealth());

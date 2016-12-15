@@ -9,7 +9,7 @@ public class GameConsole extends javax.swing.JTextArea{
     private static final java.awt.Color colorBackground=java.awt.Color.BLACK; 
 
     public GameConsole(){
-        super("Sample text");
+        super("");
         this.setFont(new java.awt.Font(java.awt.Font.DIALOG, java.awt.Font.PLAIN, 14));
         this.setForeground(colorFont);
         this.setBackground(colorBackground);

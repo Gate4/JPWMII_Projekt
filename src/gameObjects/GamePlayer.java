@@ -6,8 +6,6 @@ import gameSingletons.GameLogic;
 import gameSingletons.GameSounds;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 
 /**
  *
@@ -59,9 +57,8 @@ public class GamePlayer extends GameCharacter{
         this.weapon=null;
         this.armor=null;
         this.experience=0;
-        this.skillPoints+=5;
         this.spells.add(FlashAttack.NAME);
-        this.spells.add(FireballAttack.NAME);
+        this.spell=FlashAttack.NAME;
         notifyObservers();
     }
 
@@ -105,7 +102,7 @@ public class GamePlayer extends GameCharacter{
     }
     
     public GameItem removeItem(int index){
-        if(index>-1&&index<items.size()){
+        if(index>-1&&index<items.size()&&isAlive()){
             GameItem gI=items.remove(index);
             notifyObservers();
             return gI;
@@ -114,16 +111,18 @@ public class GamePlayer extends GameCharacter{
     }
     
     public void equipItem(int index){
-        if(index>-1&&index<items.size()){
+        if(index>-1&&index<items.size()&&isAlive()){
             GameItem gI=items.get(index);
             if(gI.getType()==GameItem.TYPE_WEAPON){
                 if(weapon!=null)items.add(weapon);
                 weapon=gI;
+                GameLogic.getInstance().writelnInConsole(getName()+" uzbraja się w: "+this.weapon.getName());
             }else if(gI.getType()==GameItem.TYPE_ARMOR){
                 if(armor!=null)items.add(armor);
                 armor=gI;
+                GameLogic.getInstance().writelnInConsole(getName()+" zakłada: "+this.armor.getName());
             }
-            
+            GameSounds.getInstance().playSound("itemSelect.wav");
             items.remove(gI);
             notifyObservers();
         }
@@ -132,7 +131,7 @@ public class GamePlayer extends GameCharacter{
     public String getItemDescription(int index){
         String desc="";
         GameItem i=null;
-        if(index>-1&&index<items.size()){
+        if(index>-1&&index<items.size()&&isAlive()){
             GameItem gI=items.get(index);
             if(gI.getType()==GameItem.TYPE_WEAPON){
                 i=weapon;
@@ -141,6 +140,19 @@ public class GamePlayer extends GameCharacter{
             }
             if(i!=null)desc+="Nosisz: "+i.toString()+"\n";
             desc+="Zazn.:  "+gI.toString()+"\n";
+        }
+        return desc;
+    }
+    
+    public String getSpellDescription(int index){
+        String desc="";
+        if(index>-1&&index<spells.size()&&isAlive()){
+            if(spells.get(index).equals(FlashAttack.NAME)){
+                return FlashAttack.DESCRIPTION;
+            }
+            if(spells.get(index).equals(FireballAttack.NAME)){
+                return FireballAttack.DESCRIPTION;
+            }
         }
         return desc;
     }
@@ -155,8 +167,10 @@ public class GamePlayer extends GameCharacter{
     }
 
     public void setSpell(int index) {
-        if(index>-1&&index<spells.size()){
+        if(index>-1&&index<spells.size()&&isAlive()){
             this.spell=spells.get(index);
+            GameLogic.getInstance().writelnInConsole(getName()+" wybiera nowy czar: "+this.spell);
+            GameSounds.getInstance().playSound("spellSelect.wav");
         }
     }
     

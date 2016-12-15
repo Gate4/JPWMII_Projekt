@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
  */
 public class FireballAttack extends GameAttack{
     public static final String NAME="Kula ognia";
+    public static final String DESCRIPTION="Magiczny atak raniący jednego przeciwnika.\nMożna rzucić w dowolnym kierunku.";
     private int xDirection;
     private int yDirection;
     private int attack;

@@ -145,6 +145,7 @@ public class GameLogic implements ActionListener {
     public boolean isCollisionAtXY(int x, int y) {
         boolean collision = false;
         if (gameData != null) {
+            if(gameData.getPlayer().isCollidingAtXY(x, y))return true;
             for (GameTile gT : gameData.getCurrentRoom().getRoomLayout()) {
                 if (gT.isCollidingAtXY(x, y)) {
                     collision = true;
@@ -169,7 +170,7 @@ public class GameLogic implements ActionListener {
         moveObject(o, xDirection[direction], yDirection[direction]);
     }
 
-    public void moveObject(GameObject o, int xDirection, int yDirection) {
+    public boolean moveObject(GameObject o, int xDirection, int yDirection) {
         if (canMove(o)) {
             int nX = o.getX() + xDirection;
             int nY = o.getY() + yDirection;
@@ -178,11 +179,17 @@ public class GameLogic implements ActionListener {
                 gameData.setCurrentRoom(gTP.getDestination(), gTP.getDestiantionX(), gTP.getDestiantionY());
                 gameSingletons.GameSounds.getInstance().playSound("door.wav");
                 o.updateGraphicPosition();
+                return true;
             } else {
                 if (!isCollisionAtXY(nX, nY)) {
                     o.move(xDirection, yDirection);
+                    return true;
+                }else{
+                    return false;
                 }
             }
+        }else{
+            return false;
         }
     }
 
@@ -251,10 +258,46 @@ public class GameLogic implements ActionListener {
     public boolean isInMeleeRange(GameObject ob) {
         return (Math.abs(gameData.getPlayer().getX() - ob.getX()) < 2) && (Math.abs(gameData.getPlayer().getY() - ob.getY()) < 2);
     }
+    
+    public boolean canHitWithFlash(GameObject ob){
+        return ob.getX()==gameData.getPlayer().getX()||ob.getY()==gameData.getPlayer().getY();
+    }
+    
+    public boolean canHitWithFireball(GameObject ob){
+        return canHitWithFlash(ob)||((gameData.getPlayer().getX()-ob.getX())==(gameData.getPlayer().getY()-ob.getY()));
+    }
 
     public void moveTowardPlayer(GameObject ob) {
         int xDirection = gameData.getPlayer().getX() - ob.getX();
         int yDirection = gameData.getPlayer().getY() - ob.getY();
+        if (xDirection != 0) {
+            xDirection /= Math.abs(xDirection);
+        }
+        if (yDirection != 0) {
+            yDirection /= Math.abs(yDirection);
+        }
+        moveObject(ob, xDirection, yDirection);
+    }
+    
+    public boolean moveToRangedAttack(GameObject ob){
+        int xDirection = gameData.getPlayer().getX() - ob.getX();
+        int yDirection = gameData.getPlayer().getY() - ob.getY();
+        if (Math.abs(xDirection)<Math.abs(yDirection)){
+            if (xDirection != 0) {
+                xDirection /= Math.abs(xDirection);
+            }
+            return moveObject(ob, xDirection, 0);
+        }else{
+            if (yDirection != 0) {
+                yDirection /= Math.abs(yDirection);
+            }
+             return moveObject(ob, 0, yDirection);
+        }
+    }
+
+    public void moveAwayFromPlayer(GameObject ob) {
+        int xDirection =  ob.getX()-gameData.getPlayer().getX();
+        int yDirection =  ob.getY()-gameData.getPlayer().getY();
         if (xDirection != 0) {
             xDirection /= Math.abs(xDirection);
         }
@@ -291,6 +334,30 @@ public class GameLogic implements ActionListener {
         }
     }
     
+    public void flashAttackInPlayerDirection(int attack, int x, int y){
+        int xDirection = gameData.getPlayer().getX()-x;
+        int yDirection = gameData.getPlayer().getY()-y;
+        if (xDirection != 0) {
+            xDirection /= Math.abs(xDirection);
+        }
+        if (yDirection != 0) {
+            yDirection /= Math.abs(yDirection);
+        }
+        flashAttack(attack, x+xDirection, y+yDirection, xDirection, yDirection);
+    }
+    
+    public void fireballAttackInPlayerDirection(int attack, int x, int y){
+        int xDirection = gameData.getPlayer().getX()-x;
+        int yDirection = gameData.getPlayer().getY()-y;
+        if (xDirection != 0) {
+            xDirection /= Math.abs(xDirection);
+        }
+        if (yDirection != 0) {
+            yDirection /= Math.abs(yDirection);
+        }
+        fireballAttack(attack, x+xDirection, y+yDirection, xDirection, yDirection);
+    }
+    
     public void fireballAttack(int attack, int x, int y, int xDirection, int yDirection) {
         if (x < GameRoom.DEFAULT_WIDTH && x > -1 && y < GameRoom.DEFAULT_HEIGHT && y > -1) {
             gameData.getAttacks().add(new FireballAttack(x, y, attack, xDirection, yDirection));
@@ -310,6 +377,8 @@ public class GameLogic implements ActionListener {
             }else if(spell.equals(FireballAttack.NAME)) {
                     fireballAttack(gameData.getPlayer().getMagicAttack(), gameData.getPlayer().getX()+xDirection[direction],
                             gameData.getPlayer().getY()+yDirection[direction], xDirection[direction], yDirection[direction]);
+            }else{
+                writelnInConsole("Nie wybrano żadnego zaklęcia");
             }
         }
 

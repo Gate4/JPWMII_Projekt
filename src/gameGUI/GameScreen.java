@@ -132,7 +132,7 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
             public void actionPerformed(ActionEvent e) {
                 String message="Sterowanie:\nW, S, D, A, E, Q, C, Z - kolejno:"
                         + " ruch na N, S, E, W, NE, NW, SE, SW\nShift+kierunek - "
-                        + "atak w podanym kierunku\nCtrl+kierunek - rzucenie"
+                        + "atak w podanym kierunku\nCtrl+kierunek - rzucenie "
                         + "wybranego zaklęcia w podanym kierunku\nSpacja - "
                         + "odpoczynek (regeneracja życia) - niemożliwy w pobliżu "
                         + "przeciwników\nF - podniesienie przedmiotu\nH - wyświetlenie pomocy";
@@ -328,8 +328,6 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
         if(this.gameData!=null){
             Graphics2D g=(Graphics2D)grphcs.create();
             if(this.renderedRoom!=gameData.getCurrentRoom()){
-                System.out.println("RYSUJE NOWY POKOJ");
-                this.backgroundImage.flush();
                 java.awt.Graphics2D g2D=(java.awt.Graphics2D)this.backgroundImage.getGraphics().create();
                 paintRoom(g2D, gameData.getCurrentRoom());
                 this.renderedRoom=gameData.getCurrentRoom();
@@ -338,8 +336,8 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
             g2D.setComposite(AlphaComposite.Clear);
             g2D.fillRect(0, 0, width, height); 
             g2D.setComposite(AlphaComposite.SrcOver);
-            for(GameCharacter gC:gameData.getCurrentRoom().getEnemies())paintObject(g2D, gC);
             for(GameItem gI:gameData.getCurrentRoom().getItems())paintObject(g2D, gI);
+            for(GameCharacter gC:gameData.getCurrentRoom().getEnemies())paintObject(g2D, gC);
             paintObject(g2D, gameData.getPlayer());
             for(GameAttack gA:gameData.getAttacks())if(!gA.isFinished())paintObject(g2D, gA);
             g.drawImage(this.backgroundImage.getScaledInstance(width, height, java.awt.image.BufferedImage.SCALE_FAST), 0, 0, null);
@@ -368,7 +366,6 @@ public class GameScreen extends javax.swing.JComponent implements ActionListener
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        //nextFrames
         if(gameData!=null){
             gameData.getPlayer().nextFrame();
             for(GameCharacter gC:gameData.getCurrentRoom().getEnemies())gC.nextFrame();

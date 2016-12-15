@@ -1,5 +1,7 @@
 package gameObjects;
 
+import gameAI.AIFireballMage;
+import gameAI.AIFlashMage;
 import gameSingletons.GameLogic;
 
 /**
@@ -22,6 +24,10 @@ public abstract class GameEnemy extends GameCharacter{
         gameAI.GameAI ai=null;
         if(this.aiIndex==0){
             ai=new gameAI.AIWarrior();
+        }else if(this.aiIndex==1){
+            ai=new AIFlashMage();
+        }else{
+            ai=new AIFireballMage();
         }
         if(ai!=null){
             ai.takeTurn(this);

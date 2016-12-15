@@ -47,8 +47,6 @@ public class GameImage{
             return this.image.getSubimage(this.frameWidth*index, 0, this.frameWidth,
                     this.frameHeight);
         }catch(java.awt.image.RasterFormatException ex){
-            javax.swing.JOptionPane.showMessageDialog(null, "Błąd wczytywania klatki "+index,
-                    "Błąd "+this.toString(), javax.swing.JOptionPane.ERROR_MESSAGE);
             return new java.awt.image.BufferedImage(1, 1, java.awt.image.BufferedImage.TYPE_INT_RGB);
         }
     }

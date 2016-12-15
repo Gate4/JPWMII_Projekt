@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
  */
 public class FlashAttack extends GameAttack{
     public static final String NAME="Błyskawica";
+    public static final String DESCRIPTION="Magiczny atak raniący przeciwników w linii prostej.";
     private int xDirection;
     private int yDirection;
     private int attack;
@@ -46,10 +47,8 @@ public class FlashAttack extends GameAttack{
     private void createNext(int x,int y){
         if(!GameLogic.getInstance().isOutOfBunds(x, y)){
             if(GameLogic.getInstance().isCollisionAtXY(x, y)){
-            System.out.println("create");
             GameLogic.getInstance().flashAttack(attack, x, y, xDirection, yDirection);
         }else{
-            System.out.println("try next");
             createNext(x+xDirection,y+yDirection);
             }
         }else{
