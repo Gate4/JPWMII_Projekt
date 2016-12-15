@@ -29,10 +29,6 @@ public class MainWindow extends javax.swing.JFrame implements Observer{
         initComponents();
         this.getContentPane().setBackground(java.awt.Color.BLACK);
         newGame();
-        
-        
-        
-        
     }
 
     /**
